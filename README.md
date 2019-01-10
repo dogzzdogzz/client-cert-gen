@@ -34,7 +34,8 @@ mac = 00:00:00:00:00:03
 
 ## Generated certificate
 ```bash
-$ openssl x509 -in 00-00-00-00-00-03/client.crt -text -noout                             11:37:53 
+$ openssl x509 -in 00-00-00-00-00-03/client.crt -text -noout
+
 Certificate:
     Data:
         Version: 3 (0x2)
@@ -44,7 +45,7 @@ Certificate:
         Validity
             Not Before: Jan 10 03:26:47 2019 GMT
             Not After : Jan  7 03:26:47 2029 GMT
-        Subject: O=Engenius Networks, CN=*.engeniuscloud.com/UID=00:00:00:00:00:03
+        Subject: O=abc, CN=*.example.com/UID=00:00:00:00:00:03
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 Public-Key: (2048 bit)
@@ -58,5 +59,4 @@ Certificate:
             X509v3 Extended Key Usage:
                 TLS Web Client Authentication
             X509v3 Authority Key Identifier:
-                keyid:04:52:50:FA:15:0A:75:C5:B8:05:A2:A5:49:E7:CE:3C:D4:28:D6:03
 ```

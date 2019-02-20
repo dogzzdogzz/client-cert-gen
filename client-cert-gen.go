@@ -47,6 +47,7 @@ func pemBlockForKey(priv interface{}) *pem.Block {
 
 func main() {
 	var mac = flag.String("mac", "", "MAC address of DUT")
+	var certValidDuration = flag.Int("dur", 3650, "Unit: days. The duration of SSL certificate validity")
 	flag.Parse()
 	flagset := make(map[string]bool)
 	flag.Visit(func(f *flag.Flag) { flagset[f.Name] = true })
@@ -55,6 +56,7 @@ func main() {
 		fmt.Println("ERR: --mac not set")
 		os.Exit(2)
 	}
+
 	fmt.Println("mac =", *mac)
 	var macPath string
 	macPath = strings.Replace(*mac, ":", "-", -1)
@@ -123,6 +125,7 @@ func main() {
 	priv, err := rsa.GenerateKey(rand.Reader, 2048)
 
 	// create client certificate template
+
 	clientCRTTemplate := x509.Certificate{
 		// Signature:          clientCSR.Signature,
 		// SignatureAlgorithm: clientCSR.SignatureAlgorithm,
@@ -136,6 +139,7 @@ func main() {
 		Subject: pkix.Name{
 			CommonName:   "*.engeniuscloud.com",
 			Organization: []string{"Engenius Networks"},
+			SerialNumber: *mac,
 			ExtraNames: []pkix.AttributeTypeAndValue{
 				{
 					Type:  []int{0, 9, 2342, 19200300, 100, 1, 1},
@@ -143,8 +147,9 @@ func main() {
 				},
 			},
 		},
-		NotBefore:   time.Now(),
-		NotAfter:    time.Now().Add(24 * time.Hour * 365 * 10),
+		NotBefore: time.Now(),
+		// NotAfter:    time.Now().Add(24 * time.Hour * 365 * 10),
+		NotAfter:    time.Now().Add(24 * time.Hour * time.Duration(*certValidDuration)),
 		KeyUsage:    x509.KeyUsageDigitalSignature,
 		ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth},
 	}

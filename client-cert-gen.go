@@ -138,7 +138,7 @@ func main() {
 		// Subject:      clientCSR.Subject,
 		Subject: pkix.Name{
 			CommonName:   "*.engeniuscloud.com",
-			Organization: []string{"Engenius Networks"},
+			Organization: []string{"EnGenius Technologies, Inc."},
 			SerialNumber: *mac,
 			ExtraNames: []pkix.AttributeTypeAndValue{
 				{
